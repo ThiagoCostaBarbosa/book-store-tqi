@@ -9,7 +9,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/books")
+@RequestMapping(value = "/books")
 public class BookController {
 
     @Autowired
@@ -35,7 +35,7 @@ public class BookController {
                 .map(bookEntity -> mapper.toResponse(bookEntity))
                 .collect(Collectors.toList());
     }
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public BookResponse findById(@PathVariable UUID id) {
         return mapper.toResponse(service.findById(id));
