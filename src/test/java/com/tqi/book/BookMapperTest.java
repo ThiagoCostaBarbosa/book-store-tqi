@@ -1,53 +1,33 @@
 package com.tqi.book;
 
-import com.tqi.book.BookEntity;
-import com.tqi.book.BookMapper;
-import com.tqi.book.BookRequest;
-import com.tqi.book.BookResponse;
+import com.tqi.Utils.Utils;
 import org.junit.jupiter.api.Test;
-
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BookMapperTest {
 
+    private BookMapper mapper = new BookMapper();
+
     @Test
     public void testToEntity() {
 
-        BookRequest request = new BookRequest();
-
-        request.setTitle("Title");
-        request.setAuthor("Author");
-        request.setPublisher("Publisher");
-        request.setImage("Image");
-        request.setPublisherDate(2020);
-
-        BookMapper mapper = new BookMapper();
+        BookRequest request = Utils.createBookRequest();
         BookEntity entity = mapper.toEntity(request);
+        BookEntity expectedEntity = Utils.createBookEntityFromMapper();
 
-        assertEquals(entity.getTitle(), request.getTitle());
-        assertEquals(entity.getAuthor(), request.getAuthor());
-        assertEquals(entity.getPublisher(), request.getPublisher());
-        assertEquals(entity.getImage(), request.getImage());
-        assertEquals(entity.getPublisherDate(), request.getPublisherDate());
+        assertEquals(entity.getTitle(), expectedEntity.getTitle());
+        assertEquals(entity.getAuthor(), expectedEntity.getAuthor());
+        assertEquals(entity.getPublisher(), expectedEntity.getPublisher());
+        assertEquals(entity.getImage(), expectedEntity.getImage());
+        assertEquals(entity.getPublisherDate(), expectedEntity.getPublisherDate());
 
     }
 
     @Test
     public void testToResponse() {
 
-        BookEntity entity = new BookEntity();
-
-        entity.setId(UUID.randomUUID());
-        entity.setTitle("Title");
-        entity.setAuthor("Author");
-        entity.setPublisher("Publisher");
-        entity.setImage("Image");
-        entity.setPublisherDate(2020);
-        entity.setInventory(105);
-
-        BookMapper mapper = new BookMapper();
+        BookEntity entity = Utils.createBookEntity();
         BookResponse response = mapper.toResponse(entity);
 
         assertEquals(response.getId(), entity.getId());
