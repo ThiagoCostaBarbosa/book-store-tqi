@@ -1,6 +1,5 @@
 package com.tqi.book;
 
-import com.tqi.Utils.Utils;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -12,9 +11,9 @@ public class BookMapperTest {
     @Test
     public void testToEntity() {
 
-        BookRequest request = Utils.createBookRequest();
+        BookRequest request = BookUtils.createBookRequest();
         BookEntity entity = mapper.toEntity(request);
-        BookEntity expectedEntity = Utils.createBookEntityFromMapper();
+        BookEntity expectedEntity = BookUtils.createBookEntityFromMapper();
 
         assertEquals(entity.getTitle(), expectedEntity.getTitle());
         assertEquals(entity.getAuthor(), expectedEntity.getAuthor());
@@ -27,7 +26,7 @@ public class BookMapperTest {
     @Test
     public void testToResponse() {
 
-        BookEntity entity = Utils.createBookEntity();
+        BookEntity entity = BookUtils.createBookEntity();
         BookResponse response = mapper.toResponse(entity);
 
         assertEquals(response.getId(), entity.getId());

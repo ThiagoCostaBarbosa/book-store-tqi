@@ -1,7 +1,6 @@
 package com.tqi.book;
 
 
-import com.tqi.Utils.Utils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,13 +27,11 @@ public class BookServiceTest {
 
     @Test
     void shouldCreateBookWhenBookRequestIsValid() {
+        BookEntity request = BookUtils.createBookEntity();
 
-        BookRequest request = Utils.createBookRequest();
-        BookEntity entity = Utils.createBookEntity();
+        when(bookRepository.save(any())).thenReturn(request);
 
-        when(bookRepository.save(any())).thenReturn(entity);
-
-        BookResponse response = mapper.toResponse(bookService.save(mapper.toEntity(request)));
+        BookEntity response = bookService.save(request);
 
         verify(bookRepository, times(1)).save(any());
 
@@ -50,20 +47,20 @@ public class BookServiceTest {
     @Test
     void shouldReturnBookResponseWhenBookEntityExists() {
 
-        BookEntity entity = Utils.createBookEntity();
+        BookEntity entity = BookUtils.createBookEntity();
 
         when(bookRepository.findById(any())).thenReturn(Optional.of(entity));
 
-        BookResponse retrieve  = mapper.toResponse(bookService.findById(entity.getId()));
+        BookEntity response  = bookService.findById(entity.getId());
 
         verify(bookRepository, times(1)).findById(any());
 
-        assertEquals(retrieve.getId(), entity.getId());
-        assertEquals(retrieve.getTitle(), entity.getTitle());
-        assertEquals(retrieve.getAuthor(), entity.getAuthor());
-        assertEquals(retrieve.getPublisher(), entity.getPublisher());
-        assertEquals(retrieve.getPublisherDate(), entity.getPublisherDate());
-        assertEquals(retrieve.getImage(), entity.getImage());
+        assertEquals(response.getId(), entity.getId());
+        assertEquals(response.getTitle(), entity.getTitle());
+        assertEquals(response.getAuthor(), entity.getAuthor());
+        assertEquals(response.getPublisher(), entity.getPublisher());
+        assertEquals(response.getPublisherDate(), entity.getPublisherDate());
+        assertEquals(response.getImage(), entity.getImage());
 
     }
 
